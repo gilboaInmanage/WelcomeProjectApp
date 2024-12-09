@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/splashAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+    <il.co.inmanage.widgets.InManageTextView
+        android:id="@+id/tvFirstStartup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:maxLines="3"
+        android:textColor="@android:color/black"
+        android:textSize="14dp"
+        android:visibility="visible"
+        app:typeface="regular" />
+
+    <ProgressBar
+        android:id="@+id/severConnectionProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/progress_bar_circular_background"
+        android:progressDrawable="@drawable/progress_bar_circular"
+        android:layout_marginTop="5dp"
+        android:max="100"
+        android:visibility="gone"
+        android:indeterminate="false">
+    </ProgressBar>
+
+    <il.co.inmanage.widgets.InManageTextView
+        android:id="@+id/tvProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:layout_marginTop="6dp"
+        app:typeface="regular"/>
+
+    <il.co.inmanage.widgets.InManageTextView
+        android:id="@+id/tvStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:text="מעדכן ..."
+        android:layout_marginTop="10dp"
+        android:textSize="14dp"
+        android:visibility="gone"
+        app:typeface="regular"/>
+
+    <il.co.inmanage.widgets.InManageTextView
+        android:id="@+id/tvVersionName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:textDirection="ltr"
+        android:text="1.0"
+        android:textSize="13dp"
+        app:typeface="regular"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
