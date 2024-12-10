@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.example.welcomeprojectapp.activities.StartupActivity;
 import com.example.welcomeprojectapp.managers.AppManager;
+import com.example.welcomeprojectapp.managers.RequestManager;
 import com.example.welcomeprojectapp.managers.StartUpManager;
 import com.google.firebase.FirebaseApp;
 
@@ -27,14 +28,18 @@ public class WelcomeApplication extends BaseApplication {
 
     @NonNull
     @Override
-    public BaseAppManager getAppManager() {
+    public AppManager getAppManager() {
         return AppManager.getInstance();
     }
 
-    public AppManager appManager(){
-        return AppManager.getInstance();
+    @NonNull
+    @Override
+    public RequestManager getRequestManager(){
+        return RequestManager.getInstance();
     }
-    public StartUpManager startupManager(){
+    @NonNull
+    @Override
+    public StartUpManager getStartupManager(){
         return StartUpManager.getInstance();
     }
 
@@ -49,22 +54,17 @@ public class WelcomeApplication extends BaseApplication {
         return appInstance;
     }
 
-    @NonNull
-    @Override
-    public StartUpManager getStartUpManager() {
-        return StartUpManager.getInstance();
-    }
 
     public void onCreate() {
         super.onCreate();
         /// Initialize StartUpManager
-        StartUpManager startupManager = StartUpManager.getInstance();
-        startupManager.onActivityCreate(this.getCurrentActivity()); // Ensure proper initialization
-        Log.d("StartUpManager", "StartUpManager instance: " + startupManager);
-
-        // Ensure AppManager is initialized
-        AppManager appManager = AppManager.getInstance();
-        Log.d("AppManager", "AppManager instance: " + appManager);
+//        StartUpManager startupManager = StartUpManager.getInstance();
+//        startupManager.onActivityCreate(this.getCurrentActivity()); // Ensure proper initialization
+//        Log.d("StartUpManager", "StartUpManager instance: " + startupManager);
+//
+//        // Ensure AppManager is initialized
+//        AppManager appManager = AppManager.getInstance();
+//        Log.d("AppManager", "AppManager instance: " + appManager);
     }
 
 

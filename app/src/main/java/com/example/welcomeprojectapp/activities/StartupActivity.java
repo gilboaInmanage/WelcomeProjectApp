@@ -32,7 +32,7 @@ public class StartupActivity extends BaseStartUpActivity {
     public void onStartupProcessStepChanged(int currentStep, boolean isFinished) {
         super.onStartupProcessStepChanged(currentStep, isFinished);
         // Updating progress views
-        float lastStep = (float) app().getStartUpManager().getLastStep();
+        float lastStep = (float) app().getStartupManager().getLastStep();
         int progress = (int) ((currentStep / lastStep) * 100f);
         if (progressBar != null) {
             progressBar.setProgress(progress);

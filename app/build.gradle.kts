@@ -16,6 +16,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    //val prod_url = "https://newapi.mcdonalds.co.il" // Production URL
 
     buildTypes {
         release {
@@ -26,9 +27,25 @@ android {
             )
         }
     }
+
+
+
+    flavorDimensions.add("app")
+
+    productFlavors {
+        create("prod") {
+            applicationId = "com.example.welcomeprojectapp"
+            buildConfigField("String", "URL", "\"https://newapi.mcdonalds.co.il\"") // prod_url
+            buildConfigField("boolean", "SHOULD_REPORT_ANALYTICS", "true")
+        }
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 

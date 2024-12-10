@@ -32,10 +32,15 @@ public class GetHostUrlResponse extends BaseGetHostUrlResponse {
             WelcomeApplication.app().removeFromDisk(EnvironmentUtils.FILE_NAME, EnvironmentUtils.HOST_URL_KEY);
         }
 
-        setPostUrl(env.isEmpty() ? Parser.jsonParse(response, "url", "") : env);
-        setGetUrl(env.isEmpty() ? Parser.jsonParse(response, "get_url", getPostUrl()) : env);
+        // Explicitly check if env is null or empty
+        if (env == null || env.isEmpty()) {
+            setPostUrl(Parser.jsonParse(response, "url", ""));
+            setGetUrl(Parser.jsonParse(response, "get_url", getPostUrl()));
+        } else {
+            setPostUrl(env);
+            setGetUrl(env);
+        }
     }
-
     public String getFirstTimeMessage() {
         return firstTimeMessage;
     }

@@ -39,6 +39,7 @@ public class StartUpManager extends BaseStartUpManager {
         return instance.getInstance();
     }
 
+    @NonNull
     @Override
     public WelcomeApplication app() {
         return (WelcomeApplication) super.app();
@@ -53,6 +54,7 @@ public class StartUpManager extends BaseStartUpManager {
         return new SetSettingsResponse();
     }
 
+    @NonNull
     @Override
     public BaseSetSettingsServerRequest getSetSettingsRequest() {
         return new BaseSetSettingsServerRequest(
@@ -72,38 +74,42 @@ public class StartUpManager extends BaseStartUpManager {
     @NonNull
     @Override
     public GetHostUrlServerRequest getHostUrlServerRequest() {
-        return new GetHostUrlServerRequest(
-                new OnServerRequestDoneListener<BaseGetHostUrlServerRequest, BaseGetHostUrlResponse>() {
-                    @Override
-                    public void onFailure(@NonNull String requestName, @NonNull BaseGetHostUrlServerRequest baseServerRequest, @NonNull BaseServerRequestResponse.ServerRequestFailureResponse serverRequestFailure) {
-  //                      OnServerRequestDoneListener.super.onFailure(requestName, baseServerRequest, serverRequestFailure);
-                    }
+        return new GetHostUrlServerRequest(new OnServerRequestDoneListener<BaseGetHostUrlServerRequest, BaseGetHostUrlResponse>() {
 
-                    @Override
-                    public void onSuccess(String requestName, BaseGetHostUrlServerRequest baseServerRequest, BaseGetHostUrlResponse response) {
-                        onGetHostUrl(response);
-                        onRequestSuccess(response);
-                    }
-                });
+            @Override
+            public void onSuccess(@NonNull String requestName, @NonNull BaseGetHostUrlServerRequest baseServerRequest, @NonNull BaseGetHostUrlResponse baseResponse) {
+                onGetHostUrl(baseResponse);
+                onRequestSuccess(baseResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull String requestName, @NonNull BaseGetHostUrlServerRequest baseServerRequest, @NonNull BaseServerRequestResponse.ServerRequestFailureResponse serverRequestFailure) {
+                Log.d("RequestFailed",serverRequestFailure.toString());
+            }
+        });
     }
 
+
+
     @Override
-    public void onGetHostUrl(BaseGetHostUrlResponse response) {
-        super.onGetHostUrl(response);
-        Log.d("GetHostUrl", "Response: " + response.toString());
-        if (response instanceof GetHostUrlResponse &&
-                app().getCurrentActivity() instanceof StartupActivity &&
+    public void onGetHostUrl(@NonNull BaseGetHostUrlResponse baseResponse) {
+        Log.d("baseResponse1", baseResponse.toString());
+        Log.d("baseResponse2", baseResponse.getGetUrl());
+        super.onGetHostUrl(baseResponse);
+        if (baseResponse instanceof GetHostUrlResponse &&
+                app().getCurrentActivity() instanceof StartupActivity currentActivity &&
                 isFirstStartup()) {
-            ((StartupActivity) app().getCurrentActivity()).setFirstTimeMessage(((GetHostUrlResponse) response).getFirstTimeMessage());
+            currentActivity.setFirstTimeMessage(((GetHostUrlResponse) baseResponse).getFirstTimeMessage());
             updateNotFirstStartup();
         }
     }
     private boolean isFirstStartup() {
-        return app().getSharedPreferences().readBooleanFromDisk(
-                FILENAME,
-                KEY_FIRST_STARTUP,
-                true
-        );
+        return app().getSharedPreferences() != null &&
+                app().getSharedPreferences().readBooleanFromDisk(
+                        FILENAME,
+                        KEY_FIRST_STARTUP,
+                        true
+                );
     }
 
     private void updateNotFirstStartup() {

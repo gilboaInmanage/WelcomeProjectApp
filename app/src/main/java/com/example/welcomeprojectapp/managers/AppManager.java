@@ -20,7 +20,7 @@ public class AppManager extends BaseAppManager {
     @Nullable
     @Override
     protected BaseProcessManager startOtherProcess(int processIndex, @Nullable Bundle bundle, @Nullable OnProcessStepChangedListener onProcessStepChangedListener) {
-        return app().startupManager();
+        return app().getStartupManager();
 
     }
 
