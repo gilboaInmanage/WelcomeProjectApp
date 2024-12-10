@@ -2,6 +2,7 @@ package com.example.welcomeprojectapp.applications;
 
 import android.content.res.Configuration;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +28,7 @@ public class WelcomeApplication extends BaseApplication {
     @NonNull
     @Override
     public BaseAppManager getAppManager() {
-        return null;
+        return AppManager.getInstance();
     }
 
     public AppManager appManager(){
@@ -50,12 +51,21 @@ public class WelcomeApplication extends BaseApplication {
 
     @NonNull
     @Override
-    public BaseStartUpManager getStartUpManager() {
+    public StartUpManager getStartUpManager() {
         return StartUpManager.getInstance();
     }
 
     public void onCreate() {
         super.onCreate();
+        /// Initialize StartUpManager
+        StartUpManager startupManager = StartUpManager.getInstance();
+        startupManager.onActivityCreate(this.getCurrentActivity()); // Ensure proper initialization
+        Log.d("StartUpManager", "StartUpManager instance: " + startupManager);
 
+        // Ensure AppManager is initialized
+        AppManager appManager = AppManager.getInstance();
+        Log.d("AppManager", "AppManager instance: " + appManager);
     }
+
+
 }

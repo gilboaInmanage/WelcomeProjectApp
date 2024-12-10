@@ -11,13 +11,11 @@ import il.co.inmanage.managers.BaseProcessManager;
 import il.co.inmanage.singleton_holders.SingletonHolder;
 
 public class AppManager extends BaseAppManager {
-    private static AppManager instance;
+    private static final SingletonHolder<AppManager> instance =
+            new SingletonHolder<>(AppManager::new);
 
     public static AppManager getInstance() {
-        if(instance == null){
-            instance = new AppManager();
-        }
-        return instance;
+        return instance.getInstance();
     }
     @Nullable
     @Override

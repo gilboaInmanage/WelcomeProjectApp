@@ -3,6 +3,7 @@ import il.co.inmanage.widgets.InManageTextView;
 import com.airbnb.lottie.LottieAnimationView;
 
 import android.os.Bundle;
+import android.os.Debug;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -10,9 +11,6 @@ import androidx.annotation.NonNull;
 
 import com.example.welcomeprojectapp.R;
 import com.example.welcomeprojectapp.applications.WelcomeApplication;
-
-import java.util.Random;
-
 import il.co.inmanage.activities.BaseStartUpActivity;
 
 public class StartupActivity extends BaseStartUpActivity {
@@ -21,8 +19,13 @@ public class StartupActivity extends BaseStartUpActivity {
     private ProgressBar progressBar;
 
     protected void onCreate(Bundle savedInstanceState) {
+        //Debug.waitForDebugger();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_startup);
+    }
+
+    @Override
+    protected int getContentResourceId() {
+        return R.layout.activity_startup;
     }
 
     @Override
@@ -54,6 +57,8 @@ public class StartupActivity extends BaseStartUpActivity {
         tvVersionName = findViewById(R.id.tvVersionName);
         tvFirstStartup = findViewById(R.id.tvFirstStartup);
         splashAnimation = findViewById(R.id.splashAnimation);
+        splashAnimation.setAnimation(R.raw.loading_lottie);
+
         //initBackgroundSplash();
         // initTexts();
 
