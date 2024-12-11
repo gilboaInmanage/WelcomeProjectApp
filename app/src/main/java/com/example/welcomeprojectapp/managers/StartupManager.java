@@ -1,7 +1,7 @@
 package com.example.welcomeprojectapp.managers;
 
-import android.os.Bundle;
-import android.os.Handler;
+import static il.co.inmanage.utils.LoggingHelper.d;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -13,6 +13,8 @@ import com.example.welcomeprojectapp.server_responses.GeneralDeclarationResponse
 import com.example.welcomeprojectapp.server_responses.GetHostUrlResponse;
 import com.example.welcomeprojectapp.server_responses.SetSettingsResponse;
 
+import java.util.Objects;
+
 import il.co.inmanage.interfaces.OnServerRequestDoneListener;
 import il.co.inmanage.managers.BaseStartUpManager;
 import il.co.inmanage.singleton_holders.SingletonHolder;
@@ -20,22 +22,22 @@ import il.co.inmanage.utils.DeviceUtils;
 import il.co.inmanage.utils.ScreenUtils;
 import il.co.inmanage.server_requests.*;
 import il.co.inmanage.server_responses.*;
-public class StartUpManager extends BaseStartUpManager {
+public class StartupManager extends BaseStartUpManager {
     private static final int STEP_VALIDATE_SSL = 10;
     private static final int LAST_STEP = 12;
     private static final String FILENAME = "first_startup";
     private static final String KEY_FIRST_STARTUP = "first_startup";
 
 
-    private static final SingletonHolder<StartUpManager> instance =
-            new SingletonHolder<>(StartUpManager::new);
+    private static final SingletonHolder<StartupManager> instance =
+            new SingletonHolder<>(StartupManager::new);
 
     @Override
     public int getLastStep() {
         return LAST_STEP;
     }
 
-    public static StartUpManager getInstance() {
+    public static StartupManager getInstance() {
         return instance.getInstance();
     }
 
@@ -45,7 +47,7 @@ public class StartUpManager extends BaseStartUpManager {
         return (WelcomeApplication) super.app();
     }
     @Override
-    public BaseGetHostUrlResponse createBaseGetHostUrlResponse() {
+    public GetHostUrlResponse createBaseGetHostUrlResponse() {
         return new GetHostUrlResponse();
     }
 
@@ -75,7 +77,6 @@ public class StartUpManager extends BaseStartUpManager {
     @Override
     public GetHostUrlServerRequest getHostUrlServerRequest() {
         return new GetHostUrlServerRequest(new OnServerRequestDoneListener<BaseGetHostUrlServerRequest, BaseGetHostUrlResponse>() {
-
             @Override
             public void onSuccess(@NonNull String requestName, @NonNull BaseGetHostUrlServerRequest baseServerRequest, @NonNull BaseGetHostUrlResponse baseResponse) {
                 onGetHostUrl(baseResponse);
@@ -83,26 +84,23 @@ public class StartUpManager extends BaseStartUpManager {
             }
 
             @Override
-            public void onFailure(@NonNull String requestName, @NonNull BaseGetHostUrlServerRequest baseServerRequest, @NonNull BaseServerRequestResponse.ServerRequestFailureResponse serverRequestFailure) {
-                Log.d("RequestFailed",serverRequestFailure.toString());
+            public void onFailure(@NonNull String requestName, @NonNull BaseGetHostUrlServerRequest baseServerRequest, @NonNull BaseServerRequestResponse.ServerRequestFailureResponse failureResponse) {
+                Log.e("GetHostUrl", "Request failed: " + failureResponse.toString());
             }
         });
     }
 
-
-
     @Override
     public void onGetHostUrl(@NonNull BaseGetHostUrlResponse baseResponse) {
-        Log.d("baseResponse1", baseResponse.toString());
-        Log.d("baseResponse2", baseResponse.getGetUrl());
+       // d("onGetHostUrl1", ((GetHostUrlResponse) baseResponse).getPostUrl());
         super.onGetHostUrl(baseResponse);
-        if (baseResponse instanceof GetHostUrlResponse &&
-                app().getCurrentActivity() instanceof StartupActivity currentActivity &&
-                isFirstStartup()) {
-            currentActivity.setFirstTimeMessage(((GetHostUrlResponse) baseResponse).getFirstTimeMessage());
+        if (baseResponse instanceof GetHostUrlResponse && app().getCurrentActivity() instanceof StartupActivity && isFirstStartup()) {
+            ((StartupActivity)(app().getCurrentActivity())).setFirstTimeMessage(((GetHostUrlResponse) baseResponse).getFirstTimeMessage());
             updateNotFirstStartup();
         }
+
     }
+
     private boolean isFirstStartup() {
         return app().getSharedPreferences() != null &&
                 app().getSharedPreferences().readBooleanFromDisk(
@@ -120,20 +118,22 @@ public class StartUpManager extends BaseStartUpManager {
     @NonNull
     @Override
     public GeneralDeclarationServerRequest getGeneralDeclarationServerRequest() {
-        return new GeneralDeclarationServerRequest(
-                new OnServerRequestDoneListener<GeneralDeclarationServerRequest, GeneralDeclarationResponse>() {
-                    @Override
-                    public void onFailure(@NonNull String requestName, @NonNull GeneralDeclarationServerRequest serverRequest, @NonNull BaseServerRequestResponse.ServerRequestFailureResponse failureResponse) {
-                        Log.e("GeneralDeclaration", "Request failed: " + failureResponse.toString());
-                    }
+        return new GeneralDeclarationServerRequest(new OnServerRequestDoneListener<GeneralDeclarationServerRequest, GeneralDeclarationResponse>() {
 
-                    @Override
-                    public void onSuccess(String requestName, GeneralDeclarationServerRequest serverRequest, GeneralDeclarationResponse response) {
-                        Log.d("GeneralDeclaration", "Request succeeded: " + response.toString());
-                        // Handle successful response
-                    }
-                }
-        );
+            @Override
+            public void onSuccess(@NonNull String requestName, @NonNull GeneralDeclarationServerRequest baseServerRequest, @NonNull GeneralDeclarationResponse baseResponse) {
+                app().getSessionData().setGeneralDeclarationResponse(baseResponse);
+                app().getAppManager().onGeneralDeclarationResponse(baseResponse);
+                onRequestSuccess(baseResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull String requestName, @NonNull GeneralDeclarationServerRequest baseServerRequest, @NonNull BaseServerRequestResponse.ServerRequestFailureResponse serverRequestFailure) {
+                // Handle failure
+            }
+        });
     }
+
+
 
 }

@@ -1,5 +1,9 @@
 package com.example.welcomeprojectapp.server_responses;
 
+import static com.example.welcomeprojectapp.applications.WelcomeApplication.app;
+
+import android.util.Log;
+
 import com.example.welcomeprojectapp.applications.WelcomeApplication;
 import com.example.welcomeprojectapp.utils.EnvironmentUtils;
 
@@ -25,22 +29,23 @@ public class GetHostUrlResponse extends BaseGetHostUrlResponse {
     private void setRelevantUrls(JSONObject response) {
         String env = "";
         try {
-            env = WelcomeApplication.app().readFromDisk(EnvironmentUtils.FILE_NAME, EnvironmentUtils.HOST_URL_KEY);
+            env = app().readFromDisk(EnvironmentUtils.FILE_NAME, EnvironmentUtils.HOST_URL_KEY);
+            if (env == null) {
+                env = "";
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
         } finally {
-            WelcomeApplication.app().removeFromDisk(EnvironmentUtils.FILE_NAME, EnvironmentUtils.HOST_URL_KEY);
+            app.removeFromDisk(EnvironmentUtils.FILE_NAME, EnvironmentUtils.HOST_URL_KEY);
         }
 
-        // Explicitly check if env is null or empty
-        if (env == null || env.isEmpty()) {
-            setPostUrl(Parser.jsonParse(response, "url", ""));
-            setGetUrl(Parser.jsonParse(response, "get_url", getPostUrl()));
-        } else {
-            setPostUrl(env);
-            setGetUrl(env);
-        }
+        String parsedPostUrl = Parser.jsonParse(response, "url", "");
+        String parsedGetUrl = Parser.jsonParse(response, "get_url", parsedPostUrl);
+
+        setPostUrl(env.isEmpty() ? parsedPostUrl : env);
+        setGetUrl(env.isEmpty() ? parsedGetUrl : getPostUrl());
     }
+
     public String getFirstTimeMessage() {
         return firstTimeMessage;
     }

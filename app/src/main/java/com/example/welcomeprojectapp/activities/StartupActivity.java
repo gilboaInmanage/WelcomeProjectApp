@@ -75,11 +75,5 @@ public class StartupActivity extends BaseStartUpActivity {
         return (WelcomeApplication) super.app();
     }
 
-//    private void initTexts() {
-//        tvVersionName.setText(app().getAppVersionName());
-//        String translation = app().getAppManager().getTranslations().getTranslation("mobile_splash_updating_menu");
-//        if (!translation.isEmpty()) {
-//            tvStatus.setText(translation);
-//        }
-//    }
+
 }

@@ -1,21 +1,14 @@
 package com.example.welcomeprojectapp.applications;
 
-import android.content.res.Configuration;
-import android.util.DisplayMetrics;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.welcomeprojectapp.activities.StartupActivity;
 import com.example.welcomeprojectapp.managers.AppManager;
 import com.example.welcomeprojectapp.managers.RequestManager;
-import com.example.welcomeprojectapp.managers.StartUpManager;
-import com.google.firebase.FirebaseApp;
+import com.example.welcomeprojectapp.managers.StartupManager;
 
 import il.co.inmanage.base.BaseApplication;
-import il.co.inmanage.managers.BaseAppManager;
-import il.co.inmanage.managers.BaseStartUpManager;
 
 public class WelcomeApplication extends BaseApplication {
 
@@ -39,8 +32,8 @@ public class WelcomeApplication extends BaseApplication {
     }
     @NonNull
     @Override
-    public StartUpManager getStartupManager(){
-        return StartUpManager.getInstance();
+    public StartupManager getStartupManager(){
+        return StartupManager.getInstance();
     }
 
     protected void initManagers() {
