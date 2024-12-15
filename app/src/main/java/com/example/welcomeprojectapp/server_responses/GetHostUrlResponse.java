@@ -17,6 +17,7 @@ public class GetHostUrlResponse extends BaseGetHostUrlResponse {
 
     @Override
     public void parseData(JSONObject response) {
+        super.parseData(response);
         JSONObject colorObject = Parser.jsonParse(response, "color", new JSONObject());
         int red = Parser.jsonParse(colorObject, "r", 255);
         int green = Parser.jsonParse(colorObject, "g", 255);
@@ -38,12 +39,14 @@ public class GetHostUrlResponse extends BaseGetHostUrlResponse {
         } finally {
             app.removeFromDisk(EnvironmentUtils.FILE_NAME, EnvironmentUtils.HOST_URL_KEY);
         }
-
         String parsedPostUrl = Parser.jsonParse(response, "url", "");
         String parsedGetUrl = Parser.jsonParse(response, "get_url", parsedPostUrl);
 
+
         setPostUrl(env.isEmpty() ? parsedPostUrl : env);
         setGetUrl(env.isEmpty() ? parsedGetUrl : getPostUrl());
+
+
     }
 
     public String getFirstTimeMessage() {

@@ -26,24 +26,31 @@ import il.co.inmanage.utils.FileUtils;
 public class RequestManager extends BaseRequestManager {
 
     private static final int STORAGE_PERMISSION_REQUEST_CODE = 10023;
+    // public String baseUrl ="";
 
     private static final SingletonHolder<RequestManager> instance =
     new SingletonHolder<>(RequestManager::new);
-    private String baseUrl = "";
     public static RequestManager getInstance() {
         return instance.getInstance();
     }
 
     @NonNull
     @Override
-    public String getBaseUrl() {
-        return baseUrl.isEmpty() ? BuildConfig.URL : baseUrl;
+    public String getBaseHostUrl() {
+        return BuildConfig.URL;
     }
 
-    public void setBaseUrl(@NonNull String baseUrl) {
-        Log.d("baseURL",baseUrl);
-        this.baseUrl = baseUrl;
+    @NonNull
+    @Override
+    public String getBaseUrl() {
+        return BuildConfig.URL;
     }
+
+    @Override
+    public String getServerVersion() {
+        return BuildConfig.SERVER_VERSION;
+    }
+
 
     @NonNull
     @Override
@@ -55,6 +62,9 @@ public class RequestManager extends BaseRequestManager {
         super.addToRequestQueue(request, tag);
 
     }
+
+
+
 
 
 }

@@ -25,4 +25,3 @@ okhttp-urlconnection = { module = "com.squareup.okhttp3:okhttp-urlconnection", v
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-

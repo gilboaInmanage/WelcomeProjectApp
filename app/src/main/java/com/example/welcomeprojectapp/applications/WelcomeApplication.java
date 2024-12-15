@@ -1,5 +1,7 @@
 package com.example.welcomeprojectapp.applications;
 
+import android.os.Debug;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -7,12 +9,17 @@ import com.example.welcomeprojectapp.activities.StartupActivity;
 import com.example.welcomeprojectapp.managers.AppManager;
 import com.example.welcomeprojectapp.managers.RequestManager;
 import com.example.welcomeprojectapp.managers.StartupManager;
+import com.example.welcomeprojectapp.server_responses.GeneralDeclarationResponse;
 
 import il.co.inmanage.base.BaseApplication;
 
 public class WelcomeApplication extends BaseApplication {
 
     private static WelcomeApplication appInstance;
+
+    public void onCreate() {
+        super.onCreate();
+    }
     @Nullable
     @Override
     public String getActivityClassName() {
@@ -47,18 +54,8 @@ public class WelcomeApplication extends BaseApplication {
         return appInstance;
     }
 
-
-    public void onCreate() {
-        super.onCreate();
-        /// Initialize StartUpManager
-//        StartUpManager startupManager = StartUpManager.getInstance();
-//        startupManager.onActivityCreate(this.getCurrentActivity()); // Ensure proper initialization
-//        Log.d("StartUpManager", "StartUpManager instance: " + startupManager);
-//
-//        // Ensure AppManager is initialized
-//        AppManager appManager = AppManager.getInstance();
-//        Log.d("AppManager", "AppManager instance: " + appManager);
+    public GeneralDeclarationResponse getGeneralDeclarationResponse() {
+        return (GeneralDeclarationResponse) app().getSessionData().getGeneralDeclarationResponse();
     }
-
 
 }

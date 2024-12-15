@@ -17,9 +17,15 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     //val prod_url = "https://newapi.mcdonalds.co.il" // Production URL
+    val server_version = "\"8.1\""
+
 
     buildTypes {
+        debug {
+            buildConfigField("String", "SERVER_VERSION", server_version);
+        }
         release {
+            buildConfigField("String", "SERVER_VERSION", server_version);
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

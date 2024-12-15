@@ -2,6 +2,7 @@ package com.example.welcomeprojectapp.managers;
 
 import static il.co.inmanage.utils.LoggingHelper.d;
 
+import android.os.Debug;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -79,6 +80,7 @@ public class StartupManager extends BaseStartUpManager {
         return new GetHostUrlServerRequest(new OnServerRequestDoneListener<BaseGetHostUrlServerRequest, BaseGetHostUrlResponse>() {
             @Override
             public void onSuccess(@NonNull String requestName, @NonNull BaseGetHostUrlServerRequest baseServerRequest, @NonNull BaseGetHostUrlResponse baseResponse) {
+                Log.d("GetHostUrl", "Request succeeded: " + baseResponse.getPostUrl());
                 onGetHostUrl(baseResponse);
                 onRequestSuccess(baseResponse);
             }
@@ -92,8 +94,11 @@ public class StartupManager extends BaseStartUpManager {
 
     @Override
     public void onGetHostUrl(@NonNull BaseGetHostUrlResponse baseResponse) {
-       // d("onGetHostUrl1", ((GetHostUrlResponse) baseResponse).getPostUrl());
+//        Debug.waitForDebugger();
+        d("onGetHostUrl1", baseResponse.getPostUrl());
         super.onGetHostUrl(baseResponse);
+        d("onGetHostUrl2", baseResponse.getPostUrl());
+
         if (baseResponse instanceof GetHostUrlResponse && app().getCurrentActivity() instanceof StartupActivity && isFirstStartup()) {
             ((StartupActivity)(app().getCurrentActivity())).setFirstTimeMessage(((GetHostUrlResponse) baseResponse).getFirstTimeMessage());
             updateNotFirstStartup();
