@@ -1,26 +1,40 @@
 package com.example.welcomeprojectapp.activities;
-import il.co.inmanage.widgets.InManageTextView;
-import com.airbnb.lottie.LottieAnimationView;
 
 import android.os.Bundle;
-import android.os.Debug;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.bumptech.glide.Glide;
 import com.example.welcomeprojectapp.R;
 import com.example.welcomeprojectapp.applications.WelcomeApplication;
+import com.example.welcomeprojectapp.custom_views.Banner;
+import com.example.welcomeprojectapp.data.BannerData;
+
+import java.util.Random;
+
 import il.co.inmanage.activities.BaseStartUpActivity;
+import il.co.inmanage.utils.images_fetcher.ImageUtils;
+import il.co.inmanage.widgets.InManageTextView;
+import il.co.inmanage.widgets.InManageWebView;
 
 public class StartupActivity extends BaseStartUpActivity {
+    private final int BANNER_DURATION_MS = 5000; // Banner duration: 5 seconds
     private InManageTextView tvProgress, tvStatus, tvFirstStartup, tvVersionName;
     private LottieAnimationView splashAnimation;
     private ProgressBar progressBar;
+    private Banner bannerView;
 
     protected void onCreate(Bundle savedInstanceState) {
         //Debug.waitForDebugger();
         super.onCreate(savedInstanceState);
+        initViews();
     }
 
     @Override
@@ -29,8 +43,18 @@ public class StartupActivity extends BaseStartUpActivity {
     }
 
     @Override
+    protected void startNextProcess() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showBannerScreen();
+            }
+        }, 200);
+    }
+    @Override
     public void onStartupProcessStepChanged(int currentStep, boolean isFinished) {
         super.onStartupProcessStepChanged(currentStep, isFinished);
+
         // Updating progress views
         float lastStep = (float) app().getStartupManager().getLastStep();
         int progress = (int) ((currentStep / lastStep) * 100f);
@@ -58,21 +82,46 @@ public class StartupActivity extends BaseStartUpActivity {
         tvFirstStartup = findViewById(R.id.tvFirstStartup);
         splashAnimation = findViewById(R.id.splashAnimation);
         splashAnimation.setAnimation(R.raw.loading_lottie);
+        bannerView = findViewById(R.id.bannerView);
+        splashAnimation.playAnimation();
 
-        //initBackgroundSplash();
-        // initTexts();
-
-    }
-
-    private void initBackgroundSplash() {
-        splashAnimation.setAnimation(R.raw.loading_lottie);
     }
 
 
     @NonNull
     @Override
-    public WelcomeApplication app(){
+    public WelcomeApplication app() {
         return (WelcomeApplication) super.app();
+    }
+
+    private void showBannerScreen() {
+        splashAnimation.setVisibility(View.GONE);
+        bannerView.setVisibility(View.VISIBLE);
+    }
+
+    public void showBanner(BannerData bannerData) {
+        if (bannerData == null || !bannerData.isShouldShowBanner()) {
+            return;
+        }
+        Log.d("Banner", "Showing banner: " + bannerData);
+        bannerView.setData(bannerData);
+        bannerView.setBannerListener(new Banner.BannerListener() {
+             @Override
+             public void onClose() {
+                 app().getAppManager().startMainActivity(MainActivity.class.getName());
+             }
+
+             @Override
+             public void onBtnClick() {
+                 app().getAppManager().startMainActivity(MainActivity.class.getName());
+
+             }
+         });
+        bannerView.show(BANNER_DURATION_MS);
+    }
+
+    private void goToMainActivity() {
+        app().getAppManager().startMainActivity(MainActivity.class.getName());
     }
 
 

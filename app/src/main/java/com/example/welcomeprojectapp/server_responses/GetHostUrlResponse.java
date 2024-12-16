@@ -2,14 +2,12 @@ package com.example.welcomeprojectapp.server_responses;
 
 import static com.example.welcomeprojectapp.applications.WelcomeApplication.app;
 
-import android.util.Log;
-
-import com.example.welcomeprojectapp.applications.WelcomeApplication;
 import com.example.welcomeprojectapp.utils.EnvironmentUtils;
+
+import org.json.JSONObject;
 
 import il.co.inmanage.parser.Parser;
 import il.co.inmanage.server_responses.BaseGetHostUrlResponse;
-import org.json.JSONObject;
 
 public class GetHostUrlResponse extends BaseGetHostUrlResponse {
 

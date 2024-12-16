@@ -17,6 +17,7 @@ public class AppManager extends BaseAppManager {
     public static AppManager getInstance() {
         return instance.getInstance();
     }
+
     @Nullable
     @Override
     protected BaseProcessManager startOtherProcess(int processIndex, @Nullable Bundle bundle, @Nullable OnProcessStepChangedListener onProcessStepChangedListener) {

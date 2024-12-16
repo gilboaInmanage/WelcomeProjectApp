@@ -1,7 +1,5 @@
 package com.example.welcomeprojectapp.applications;
 
-import android.os.Debug;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -17,9 +15,17 @@ public class WelcomeApplication extends BaseApplication {
 
     private static WelcomeApplication appInstance;
 
+    public static WelcomeApplication app() {
+        if (appInstance == null) {
+            appInstance = (WelcomeApplication) BaseApplication.app;
+        }
+        return appInstance;
+    }
+
     public void onCreate() {
         super.onCreate();
     }
+
     @Nullable
     @Override
     public String getActivityClassName() {
@@ -34,12 +40,13 @@ public class WelcomeApplication extends BaseApplication {
 
     @NonNull
     @Override
-    public RequestManager getRequestManager(){
+    public RequestManager getRequestManager() {
         return RequestManager.getInstance();
     }
+
     @NonNull
     @Override
-    public StartupManager getStartupManager(){
+    public StartupManager getStartupManager() {
         return StartupManager.getInstance();
     }
 
@@ -47,15 +54,9 @@ public class WelcomeApplication extends BaseApplication {
         super.initManagers();
     }
 
-    public static WelcomeApplication app() {
-        if (appInstance == null) {
-            appInstance = (WelcomeApplication) BaseApplication.app;
-        }
-        return appInstance;
-    }
-
     public GeneralDeclarationResponse getGeneralDeclarationResponse() {
         return (GeneralDeclarationResponse) app().getSessionData().getGeneralDeclarationResponse();
     }
+
 
 }

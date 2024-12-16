@@ -2,13 +2,14 @@ package com.example.welcomeprojectapp.server_responses;
 
 import com.example.welcomeprojectapp.applications.WelcomeApplication;
 
-import il.co.inmanage.parser.Parser;
-import il.co.inmanage.server_responses.BaseSetSettingsResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import il.co.inmanage.parser.Parser;
+import il.co.inmanage.server_responses.BaseSetSettingsResponse;
 
 public class SetSettingsResponse extends BaseSetSettingsResponse {
 

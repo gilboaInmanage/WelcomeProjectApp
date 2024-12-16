@@ -1,25 +1,41 @@
 package com.example.welcomeprojectapp.server_responses;
 
+import org.json.JSONObject;
+
 import il.co.inmanage.parser.Parser;
 import il.co.inmanage.server_responses.BaseGeneralDeclarationResponse;
-
-import org.json.JSONObject;
 
 public class GeneralDeclarationResponse extends BaseGeneralDeclarationResponse {
 
     private boolean showBanner;
     private boolean isImage;
-    private String imageUrl;
-    private String videoUrl;
+    private String imageUrl = "https://upload.wikimedia.org/wikipedia/en/2/26/We_Are_Your_Friends.jpg";
+    //private String videoUrl;
 
     @Override
     public void parseData(JSONObject response) {
-        // Parse JSON data
-        JSONObject bannerData = Parser.jsonParse(response, "banner", new JSONObject());
-        this.showBanner = Parser.jsonParse(bannerData, "show_banner", false);
-        this.isImage = Parser.jsonParse(bannerData, "isImage", false);
-        this.imageUrl = Parser.jsonParse(bannerData, "imageUrl", "");
-        this.videoUrl = Parser.jsonParse(bannerData, "videoUrl", "");
+        try {
+            // Parse JSON data
+            JSONObject bannerData = Parser.jsonParse(response, "banner", new JSONObject());
+            this.showBanner = Parser.jsonParse(bannerData, "show_banner", false);
+            this.isImage = Parser.jsonParse(bannerData, "isImage", false);
+
+            // Validate and set image URL
+            String parsedImageUrl = Parser.jsonParse(bannerData, "imageUrl", null);
+            if (isValidUrl(parsedImageUrl)) {
+                this.imageUrl = parsedImageUrl;
+            }
+
+            // Validate and set video URL
+            //this.videoUrl = Parser.jsonParse(bannerData, "videoUrl", "");
+        } catch (Exception e) {
+            // Log the error for debugging
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isValidUrl(String url) {
+        return url != null && !url.isEmpty() && url.startsWith("http");
     }
 
     // Getters
@@ -35,9 +51,6 @@ public class GeneralDeclarationResponse extends BaseGeneralDeclarationResponse {
         return imageUrl;
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
-    }
 
     @Override
     public String toString() {
@@ -45,7 +58,6 @@ public class GeneralDeclarationResponse extends BaseGeneralDeclarationResponse {
                 "showBanner=" + showBanner +
                 ", isImage=" + isImage +
                 ", imageUrl='" + imageUrl + '\'' +
-                ", videoUrl='" + videoUrl + '\'' +
                 '}';
     }
 }

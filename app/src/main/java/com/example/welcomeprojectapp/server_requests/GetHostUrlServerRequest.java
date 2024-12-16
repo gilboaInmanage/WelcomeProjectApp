@@ -1,19 +1,14 @@
 package com.example.welcomeprojectapp.server_requests;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
 import com.example.welcomeprojectapp.server_responses.GetHostUrlResponse;
+
+import org.json.JSONObject;
 
 import il.co.inmanage.interfaces.OnServerRequestDoneListener;
 import il.co.inmanage.server_requests.BaseGetHostUrlServerRequest;
-import il.co.inmanage.server_requests.BaseServerRequest;
+import il.co.inmanage.server_requests.RequestOptions;
 import il.co.inmanage.server_responses.BaseGetHostUrlResponse;
 import il.co.inmanage.server_responses.BaseServerRequestResponse;
-import il.co.inmanage.server_requests.RequestOptions;
-
-import org.json.JSONObject;
 
 public class GetHostUrlServerRequest extends BaseGetHostUrlServerRequest {
 
