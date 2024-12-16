@@ -1,12 +1,13 @@
 package com.example.welcomeprojectapp.data;
 
-import il.co.inmanage.parser.Parser;
-import il.co.inmanage.server_responses.SortResponse;
-import il.co.inmanage.utils.NumberUtils;
 import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.Objects;
+
+import il.co.inmanage.parser.Parser;
+import il.co.inmanage.server_responses.SortResponse;
+import il.co.inmanage.utils.NumberUtils;
 
 public class Language extends SortResponse implements Serializable {
 
@@ -121,6 +122,20 @@ public class Language extends SortResponse implements Serializable {
                 - NumberUtils.getIntegerFromString(other.id == null ? "0" : other.id);
     }
 
+    @Override
+    public String toString() {
+        return "Language{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", direction=" + direction +
+                ", constHtml='" + constHtml + '\'' +
+                ", active=" + active +
+                ", isSelected=" + isSelected +
+                ", contentPageHtmlSuffix='" + contentPageHtmlSuffix + '\'' +
+                '}';
+    }
+
     public enum LanguageEnum {
         EN("en"), HE("he"), AR("ar");
 
@@ -144,10 +159,6 @@ public class Language extends SortResponse implements Serializable {
             this.direction = direction;
         }
 
-        public String getDirection() {
-            return direction;
-        }
-
         public static LanguageDirectionEnum fromDirection(String direction) {
             for (LanguageDirectionEnum value : values()) {
                 if (value.getDirection().equals(direction)) {
@@ -156,20 +167,10 @@ public class Language extends SortResponse implements Serializable {
             }
             return RTL;
         }
-    }
 
-    @Override
-    public String toString() {
-        return "Language{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", direction=" + direction +
-                ", constHtml='" + constHtml + '\'' +
-                ", active=" + active +
-                ", isSelected=" + isSelected +
-                ", contentPageHtmlSuffix='" + contentPageHtmlSuffix + '\'' +
-                '}';
+        public String getDirection() {
+            return direction;
+        }
     }
 }
 

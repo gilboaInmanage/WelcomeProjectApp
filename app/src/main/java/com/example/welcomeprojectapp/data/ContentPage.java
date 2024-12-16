@@ -1,8 +1,9 @@
 package com.example.welcomeprojectapp.data;
 
+import org.json.JSONObject;
+
 import il.co.inmanage.parser.Parser;
 import il.co.inmanage.server_responses.SortResponse;
-import org.json.JSONObject;
 
 public class ContentPage extends SortResponse {
 

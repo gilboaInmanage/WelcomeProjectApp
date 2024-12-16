@@ -64,7 +64,6 @@
         android:id="@+id/rlImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/llBannerBtn"
         android:layout_below="@id/tvBannerSubtitle">
 
         <ImageView
@@ -76,25 +75,6 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/llBannerBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginHorizontal="45dp"
-        android:layout_marginBottom="50dp"
-        android:gravity="center"
-        android:paddingVertical="10dp">
 
-        <il.co.inmanage.widgets.InManageTextView
-            android:id="@+id/tvBannerBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="26dp"
-            app:typeface="conBold" />
-
-    </LinearLayout>
 
 </RelativeLayout>

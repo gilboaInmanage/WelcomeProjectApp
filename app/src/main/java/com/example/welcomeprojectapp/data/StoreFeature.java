@@ -2,9 +2,10 @@ package com.example.welcomeprojectapp.data;
 
 import com.example.welcomeprojectapp.server_responses.GeneralDeclarationResponse;
 
+import org.json.JSONObject;
+
 import il.co.inmanage.parser.Parser;
 import il.co.inmanage.server_responses.SortResponse;
-import org.json.JSONObject;
 
 public class StoreFeature extends SortResponse {
 

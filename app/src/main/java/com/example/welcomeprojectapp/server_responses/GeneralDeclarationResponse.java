@@ -38,7 +38,6 @@ public class GeneralDeclarationResponse extends BaseGeneralDeclarationResponse {
     }
 
 
-
     // Getters for the parsed data
     public List<Language> getLanguages() {
         return languages;

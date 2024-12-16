@@ -138,12 +138,10 @@ public class StartupManager extends BaseStartUpManager {
 
     private void showTransitionBanner() {
 
-        BannerData  bannerData = new BannerData();
-        bannerData.setTitle("Welcome to McDonald's!");
-        bannerData.setContent("Enjoy the best meals in town.");
+        BannerData bannerData = new BannerData();
+        bannerData.setTitle("We Are Your Friends");
+        bannerData.setContent("Now in cinemas!");
         bannerData.setContentImage("https://upload.wikimedia.org/wikipedia/en/2/26/We_Are_Your_Friends.jpg");
-        bannerData.setButtonContent("Explore Menu");
-        bannerData.setButtonUrl("https://www.mcdonalds.co.il");
         bannerData.setShouldShowBanner(true);
         Log.d("Banner", "Showing banner: " + bannerData);
         // Show banner if activity is StartupActivity
@@ -169,5 +167,6 @@ public class StartupManager extends BaseStartUpManager {
                 Log.e("StartupManager", "Current activity is not StartupActivity. Navigating to MainActivity.");
                 navigateToMainActivity();
             }
-        }, 200);    }
+        }, 200);
+    }
 }

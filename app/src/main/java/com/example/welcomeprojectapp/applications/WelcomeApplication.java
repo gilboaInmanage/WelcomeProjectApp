@@ -7,7 +7,6 @@ import com.example.welcomeprojectapp.activities.StartupActivity;
 import com.example.welcomeprojectapp.managers.AppManager;
 import com.example.welcomeprojectapp.managers.RequestManager;
 import com.example.welcomeprojectapp.managers.StartupManager;
-import com.example.welcomeprojectapp.server_responses.GeneralDeclarationResponse;
 
 import il.co.inmanage.base.BaseApplication;
 
@@ -53,10 +52,5 @@ public class WelcomeApplication extends BaseApplication {
     protected void initManagers() {
         super.initManagers();
     }
-
-    public GeneralDeclarationResponse getGeneralDeclarationResponse() {
-        return (GeneralDeclarationResponse) app().getSessionData().getGeneralDeclarationResponse();
-    }
-
 
 }
