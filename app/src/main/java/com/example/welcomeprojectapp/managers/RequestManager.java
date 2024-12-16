@@ -11,9 +11,6 @@ import il.co.inmanage.singleton_holders.SingletonHolder;
 
 public class RequestManager extends BaseRequestManager {
 
-    private static final int STORAGE_PERMISSION_REQUEST_CODE = 10023;
-    // public String baseUrl ="";
-
     private static final SingletonHolder<RequestManager> instance =
             new SingletonHolder<>(RequestManager::new);
 

@@ -9,14 +9,10 @@ import com.example.welcomeprojectapp.activities.StartupActivity;
 import com.example.welcomeprojectapp.applications.WelcomeApplication;
 import com.example.welcomeprojectapp.data.BannerData;
 import com.example.welcomeprojectapp.server_requests.CustomGeneralDeclarationServerRequest;
-import com.example.welcomeprojectapp.server_requests.FetchBannerRequest;
 import com.example.welcomeprojectapp.server_requests.GetHostUrlServerRequest;
-import com.example.welcomeprojectapp.server_responses.FetchBannerResponse;
 import com.example.welcomeprojectapp.server_responses.GeneralDeclarationResponse;
 import com.example.welcomeprojectapp.server_responses.GetHostUrlResponse;
 import com.example.welcomeprojectapp.server_responses.SetSettingsResponse;
-
-import org.json.JSONObject;
 
 import il.co.inmanage.interfaces.OnServerRequestDoneListener;
 import il.co.inmanage.managers.BaseStartUpManager;
@@ -31,7 +27,7 @@ import il.co.inmanage.utils.DeviceUtils;
 import il.co.inmanage.utils.ScreenUtils;
 
 public class StartupManager extends BaseStartUpManager {
-    private static final int LAST_STEP = 9;
+    private static final int LAST_STEP = 10;
     private static final String FILENAME = "first_startup";
     private static final String KEY_FIRST_STARTUP = "first_startup";
 
@@ -128,6 +124,9 @@ public class StartupManager extends BaseStartUpManager {
                 app().getSessionData().setGeneralDeclarationResponse(baseResponse);
                 app().getAppManager().onGeneralDeclarationResponse(baseResponse);
                 onRequestSuccess(baseResponse);
+                Log.d("GeneralDeclaration1", "Request succeeded: " + baseResponse);
+
+                Log.d("GeneralDeclaration", "Request succeeded: " + app().getSessionData().getGeneralDeclarationResponse());
             }
 
             @Override
