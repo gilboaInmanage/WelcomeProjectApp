@@ -27,7 +27,7 @@ import il.co.inmanage.utils.DeviceUtils;
 import il.co.inmanage.utils.ScreenUtils;
 
 public class StartupManager extends BaseStartUpManager {
-    private static final int LAST_STEP = 10;
+    private static final int LAST_STEP = 6;
     private static final String FILENAME = "first_startup";
     private static final String KEY_FIRST_STARTUP = "first_startup";
 

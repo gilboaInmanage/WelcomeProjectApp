@@ -108,12 +108,12 @@ public class StartupActivity extends BaseStartUpActivity {
         bannerView.setBannerListener(new Banner.BannerListener() {
              @Override
              public void onClose() {
-                 app().getAppManager().startMainActivity(MainActivity.class.getName());
+                 goToMainActivity();
              }
 
              @Override
              public void onBtnClick() {
-                 app().getAppManager().startMainActivity(MainActivity.class.getName());
+                 goToMainActivity();
 
              }
          });

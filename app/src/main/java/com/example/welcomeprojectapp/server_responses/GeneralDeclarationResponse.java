@@ -1,63 +1,63 @@
 package com.example.welcomeprojectapp.server_responses;
 
+import com.example.welcomeprojectapp.data.ContentPage;
+import com.example.welcomeprojectapp.data.Language;
+import com.example.welcomeprojectapp.data.StoreFeature;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import il.co.inmanage.parser.Parser;
 import il.co.inmanage.server_responses.BaseGeneralDeclarationResponse;
 
+
 public class GeneralDeclarationResponse extends BaseGeneralDeclarationResponse {
+    private List<Language> languages;
+    private List<ContentPage> contentPages;
+    private List<StoreFeature> features;
 
-    private boolean showBanner;
-    private boolean isImage;
-    private String imageUrl = "https://upload.wikimedia.org/wikipedia/en/2/26/We_Are_Your_Friends.jpg";
-    //private String videoUrl;
-
-    @Override
     public void parseData(JSONObject response) {
         try {
-            // Parse JSON data
-            JSONObject bannerData = Parser.jsonParse(response, "banner", new JSONObject());
-            this.showBanner = Parser.jsonParse(bannerData, "show_banner", false);
-            this.isImage = Parser.jsonParse(bannerData, "isImage", false);
+            // Parse languagesArr
+            JSONArray languagesArray = Parser.jsonParse(response, "languagesArr", new JSONArray());
+            languages = Parser.createList(languagesArray, new Language());
 
-            // Validate and set image URL
-            String parsedImageUrl = Parser.jsonParse(bannerData, "imageUrl", null);
-            if (isValidUrl(parsedImageUrl)) {
-                this.imageUrl = parsedImageUrl;
-            }
+            // Parse content_pagesArr
+            JSONArray contentPagesArray = Parser.jsonParse(response, "content_pagesArr", new JSONArray());
+            contentPages = Parser.createList(contentPagesArray, new ContentPage());
 
-            // Validate and set video URL
-            //this.videoUrl = Parser.jsonParse(bannerData, "videoUrl", "");
+            // Parse featuresArr
+            JSONArray featuresArray = Parser.jsonParse(response, "featuresArr", new JSONArray());
+            features = Parser.createList(featuresArray, new StoreFeature());
+
         } catch (Exception e) {
-            // Log the error for debugging
             e.printStackTrace();
         }
     }
 
-    private boolean isValidUrl(String url) {
-        return url != null && !url.isEmpty() && url.startsWith("http");
+
+
+    // Getters for the parsed data
+    public List<Language> getLanguages() {
+        return languages;
     }
 
-    // Getters
-    public boolean isShowBanner() {
-        return showBanner;
+    public List<ContentPage> getContentPages() {
+        return contentPages;
     }
 
-    public boolean isImage() {
-        return isImage;
+    public List<StoreFeature> getFeatures() {
+        return features;
     }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
 
     @Override
     public String toString() {
         return "GeneralDeclarationResponse{" +
-                "showBanner=" + showBanner +
-                ", isImage=" + isImage +
-                ", imageUrl='" + imageUrl + '\'' +
+                "languages=" + languages +
+                ", contentPages=" + contentPages +
+                ", features=" + features +
                 '}';
     }
 }

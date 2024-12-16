@@ -1,20 +1,19 @@
 package com.example.welcomeprojectapp.models;
 
 public class Item {
-    private final String title;
-    private final String imageUrl;
+    private String type;
+    private String description;
 
-    public Item(String title, String imageUrl) {
-        this.title = title;
-        this.imageUrl = imageUrl;
+    public Item(String type, String description) {
+        this.type = type;
+        this.description = description;
     }
 
-    public String getTitle() {
-        return title;
+    public String getType() {
+        return type;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getDescription() {
+        return description;
     }
 }
-

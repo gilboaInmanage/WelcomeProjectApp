@@ -1,43 +1,40 @@
 package com.example.welcomeprojectapp.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.welcomeprojectapp.R;
 import com.example.welcomeprojectapp.models.Item;
 
 import java.util.List;
 
-public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataViewHolder> {
+public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
+    private Context context;
+    private List<Item> items;
 
-    private final List<Item> items;
-
-    public DataAdapter(List<Item> items) {
+    public DataAdapter(Context context, List<Item> items) {
+        this.context = context;
         this.items = items;
     }
 
     @NonNull
     @Override
-    public DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
-        return new DataViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_row, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DataViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Item item = items.get(position);
-        holder.itemTitle.setText(item.getTitle());
-        Glide.with(holder.itemImage.getContext())
-                .load(item.getImageUrl())
-
-                .into(holder.itemImage);
+        holder.typeTextView.setText(item.getType());
+        holder.descriptionTextView.setText(item.getDescription());
     }
 
     @Override
@@ -45,15 +42,13 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataViewHolder
         return items.size();
     }
 
-    static class DataViewHolder extends RecyclerView.ViewHolder {
-        TextView itemTitle;
-        ImageView itemImage;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView typeTextView, descriptionTextView;
 
-        public DataViewHolder(@NonNull View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            itemTitle = itemView.findViewById(R.id.itemTitle);
-            itemImage = itemView.findViewById(R.id.itemImage);
+            typeTextView = itemView.findViewById(R.id.typeTextView);
+            descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
         }
     }
 }
-
