@@ -19,7 +19,7 @@ import il.co.inmanage.widgets.InManageTextView;
 
 public class StartupActivity extends BaseStartUpActivity {
     private final int BANNER_DURATION_MS = 5000; // Banner duration: 5 seconds
-    private InManageTextView tvProgress, tvStatus, tvFirstStartup, tvVersionName;
+    private InManageTextView tvProgress, tvFirstStartup;
     private LottieAnimationView splashAnimation;
     private ProgressBar progressBar;
     private Banner bannerView;
@@ -29,6 +29,7 @@ public class StartupActivity extends BaseStartUpActivity {
         super.onCreate(savedInstanceState);
         initViews();
     }
+
 
     @Override
     protected int getContentResourceId() {
@@ -69,10 +70,8 @@ public class StartupActivity extends BaseStartUpActivity {
 
     public void initViews() {
         super.initViews();
-        tvStatus = findViewById(R.id.tvStatus);
         progressBar = findViewById(R.id.severConnectionProgressBar);
         tvProgress = findViewById(R.id.tvProgress);
-        tvVersionName = findViewById(R.id.tvVersionName);
         tvFirstStartup = findViewById(R.id.tvFirstStartup);
         splashAnimation = findViewById(R.id.splashAnimation);
         splashAnimation.setAnimation(R.raw.loading_lottie);

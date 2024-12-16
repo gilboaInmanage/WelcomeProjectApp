@@ -39,7 +39,6 @@ public class Banner extends RelativeLayout {
     private InManageTextView tvBannerTitle;
     private InManageTextView tvBannerSubtitle;
     private ImageView ivBannerLogo;
-    private LinearLayout llBannerBtn;
 
     public Banner(@NonNull Context context) {
         super(context);
